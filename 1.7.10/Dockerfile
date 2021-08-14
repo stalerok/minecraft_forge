@@ -1,5 +1,5 @@
 # syntax=docker/dockerfile:1
-FROM store/oracle/serverjre:1.8.0_241-b07
+FROM openjdk:8u111-jdk
 WORKDIR /root/
 
 #add forge and minecraft server
