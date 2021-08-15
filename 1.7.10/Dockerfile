@@ -49,5 +49,7 @@ ADD https://files.minecraftforge.net/maven/org/scala-lang/scala-xml_2.11/1.0.2/s
 #https://account.mojang.com/documents/minecraft_eula
 RUN echo "eula=true" > eula.txt
 
+EXPOSE 25565
+
 CMD ["java", "-jar", "forge-1.7.10-10.13.4.1614-1.7.10-universal.jar"]
 

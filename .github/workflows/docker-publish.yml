@@ -1,0 +1,28 @@
+name: Docker 1.7.10 push
+
+on:
+  push:
+    paths:
+      - '1.7.10/**'
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    
+    - name: Docker Login
+      uses: docker/login-action@v1.10.0
+      with:
+        registry: # optional
+        username: ${{ secrets.DOCKERHUB_USERNAME }}
+        password: ${{ secrets.DOCKERHUB_TOKEN }}
+    
+    - uses: actions/checkout@v2
+    - name: Build the Docker image
+      run: docker build 1.7.10 --tag stalerok/minecraft_forge:1.7.10
+      
+    - name: Push the Docker image
+      run: docker push stalerok/minecraft_forge:1.7.10
