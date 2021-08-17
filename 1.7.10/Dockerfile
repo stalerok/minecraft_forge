@@ -1,5 +1,9 @@
 # syntax=docker/dockerfile:1
 FROM openjdk:8u111-jdk
+
+LABEL org.opencontainers.image.source='https://github.com/stalerok/minecraft_forge'
+LABEL org.opencontainers.image.licenses='Apache-2.0'
+
 WORKDIR /root/
 
 #add forge and minecraft server
