@@ -5,12 +5,20 @@ on:
     paths:
       - '1.7.10/**'
 
+env:
+  # Use docker.io for Docker Hub if empty
+  REGISTRY: ghcr.io
+  # github.repository as <account>/<repo>
+  IMAGE_NAME: ${{ github.repository }}
 jobs:
 
   build:
 
     runs-on: ubuntu-latest
-
+    permissions:
+      contents: read
+      packages: write
+      
     steps:
     
     - name: Docker Login
@@ -19,6 +27,23 @@ jobs:
         registry: # optional
         username: ${{ secrets.DOCKERHUB_USERNAME }}
         password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+    - name: Log into registry ${{ env.REGISTRY }}
+      uses: docker/login-action@v1.10.0
+      with:
+        registry: ${{ env.REGISTRY }}
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+          
+
+    - name: Extract Docker metadata
+      id: meta
+      uses: docker/metadata-action@98669ae865ea3cffbcbaa878cf57c20bbf1c6c38
+      with:
+        images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+        
+    - name: Checkout repository
+      uses: actions/checkout@v2
     
     - uses: actions/checkout@v2
     - name: Build the Docker image
@@ -26,3 +51,10 @@ jobs:
       
     - name: Push the Docker image
       run: docker push stalerok/minecraft_forge:1.7.10
+
+    - name: Build the Docker image
+      run: docker build 1.7.10 --tag ghcr.io/stalerok/minecraft_forge:1.7.10
+      
+    - name: Push the Docker image
+      run: docker push ghcr.io/stalerok/minecraft_forge:1.7.10
+      
