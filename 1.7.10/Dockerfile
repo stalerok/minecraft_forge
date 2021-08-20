@@ -1,8 +1,11 @@
 # syntax=docker/dockerfile:1
 FROM openjdk:8u302-jre
 
-LABEL org.opencontainers.image.source='https://github.com/stalerok/minecraft_forge'
+#Image info
+LABEL org.opencontainers.image.source='https://github.com/stalerok/minecraft_forge/1.7.10/'
+LABEL org.opencontainers.image.url='https://github.com/stalerok/minecraft_forge/'
 LABEL org.opencontainers.image.licenses='Apache-2.0'
+LABEL org.opencontainers.image.authors='https://github.com/stalerok'
 
 WORKDIR /root/
 
@@ -10,6 +13,7 @@ WORKDIR /root/
 ADD https://maven.minecraftforge.net/net/minecraftforge/forge/1.7.10-10.13.4.1614-1.7.10/forge-1.7.10-10.13.4.1614-1.7.10-universal.jar /root/
 ADD https://launcher.mojang.com/v1/objects/952438ac4e01b4d115c5fc38f891710c4941df29/server.jar /root/minecraft_server.1.7.10.jar
 
+#Create folders for libraries
 RUN mkdir libraries \
 mkdir -p libraries/com/google/guava/guava/17.0/ \
 mkdir -p libraries/com/typesafe/akka/akka-actor_2.11/2.3.3 \
@@ -29,7 +33,7 @@ mkdir -p libraries/org/scala-lang/scala-reflect/2.11.1 \
 mkdir -p libraries/org/scala-lang/scala-swing_2.11/1.0.1 \
 mkdir -p libraries/org/scala-lang/scala-xml_2.11/1.0.2
 
-# add libraries
+# Add libraries
 
 ADD https://libraries.minecraft.net/lzma/lzma/0.0.1/lzma-0.0.1.jar libraries/lzma/lzma/0.0.1/
 ADD https://libraries.minecraft.net/com/google/guava/guava/17.0/guava-17.0.jar libraries/com/google/guava/guava/17.0/
@@ -53,7 +57,9 @@ ADD https://files.minecraftforge.net/maven/org/scala-lang/scala-xml_2.11/1.0.2/s
 #https://account.mojang.com/documents/minecraft_eula
 RUN echo "eula=true" > eula.txt
 
+# Ports
 EXPOSE 25565
 
+#Start command
 CMD ["java", "-jar", "forge-1.7.10-10.13.4.1614-1.7.10-universal.jar"]
 
