@@ -2,10 +2,16 @@
 FROM openjdk:8u302-jre
 
 #Image info
-LABEL org.opencontainers.image.source='https://github.com/stalerok/minecraft_forge/1.7.10/'
+LABEL org.opencontainers.image.source = "https://github.com/stalerok/minecraft_forge"
 LABEL org.opencontainers.image.url='https://github.com/stalerok/minecraft_forge/'
 LABEL org.opencontainers.image.licenses='Apache-2.0'
 LABEL org.opencontainers.image.authors='https://github.com/stalerok'
+
+#Env
+ENV RAM_MIN=512
+ENV RAM_MAX=1024
+
+ENV SERVER_PORT=25565
 
 WORKDIR /root/
 
@@ -58,8 +64,8 @@ ADD https://files.minecraftforge.net/maven/org/scala-lang/scala-xml_2.11/1.0.2/s
 RUN echo "eula=true" > eula.txt
 
 # Ports
-EXPOSE 25565
+EXPOSE $SERVER_PORT
 
 #Start command
-CMD ["java", "-jar", "forge-1.7.10-10.13.4.1614-1.7.10-universal.jar"]
+CMD java -Xmx${RAM_MAX}M -Xms${RAM_MIN}M -jar forge-1.7.10-10.13.4.1614-1.7.10-universal.jar
 

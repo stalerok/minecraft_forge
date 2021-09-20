@@ -5,8 +5,6 @@
 
 Docker repository for minecraft forge server
 
-![GitHub commit activity](https://img.shields.io/github/commit-activity/w/stalerok/minecraft_forge)
-
 
 [Docker repository](https://hub.docker.com/r/stalerok/minecraft_forge "Docker repository")
 
