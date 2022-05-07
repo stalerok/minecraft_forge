@@ -1,5 +1,5 @@
 # syntax=docker/dockerfile:1
-FROM openjdk:8u302-jre
+FROM openjdk:8-jre
 
 #Image info
 LABEL org.opencontainers.image.source = "https://github.com/stalerok/minecraft_forge"
